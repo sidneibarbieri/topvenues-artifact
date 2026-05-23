@@ -60,7 +60,9 @@ The badges considered for evaluation are **Available**, **Functional**,
 
 - Runtime and test dependencies are declared in `requirements.txt`: `arxiv`,
   `beautifulsoup4`, `click`, `httpx`, `pandas`, `pydantic`, `pyyaml`, `rich`,
-  `streamlit`, plus `pytest` and `pytest-asyncio`.
+  plus `pytest` and `pytest-asyncio`.
+- Optional web-interface dependencies are declared in `requirements-web.txt`:
+  `streamlit` and `watchdog`.
 - Python 3.11 or newer. Optional: Docker with the Compose plugin.
 - No third-party benchmarks are required. The corpus and arXiv snapshots ship
   in `data/dataset/` as gzip files and are read directly.
@@ -78,15 +80,15 @@ CrossRef, Semantic Scholar) and arXiv over HTTPS only.
 ```bash
 git clone <repository-url> topVenues
 cd topVenues
-./reproduce.sh
+bash reproduce.sh
 ```
 
-`reproduce.sh` creates `.venv/`, installs the declared dependencies, materializes
+`reproduce.sh` creates `.venv/`, installs the declared verification dependencies, materializes
 `papers.db` from the committed `papers.db.gz`, and then verifies every claim. A
 Docker alternative needs no local Python:
 
 ```bash
-docker compose run --rm app ./reproduce.sh
+docker compose run --rm app bash reproduce.sh
 ```
 
 If your shell is already inside the `topVenues` directory, skip the `cd` step.
@@ -104,7 +106,7 @@ confirms the snapshot bootstrapped and the package is functional.
 
 ## Experiments
 
-`./reproduce.sh` runs every claim below in one or two minutes (after dependency
+`bash reproduce.sh` runs every claim below in one or two minutes (after dependency
 installation), offline, from the committed snapshots, and prints the snapshot
 SHA-256 for byte-stability. Each claim can also be reproduced on its own.
 
@@ -124,7 +126,7 @@ SHA-256 for byte-stability. Each claim can also be reproduced on its own.
 
 ### Claim 3 — Query and export performance
 
-- Command: `./reproduce.sh` (latency and export stages)
+- Command: `bash reproduce.sh` (latency and export stages)
 - Expected: keyword search under 31 ms on the full corpus; a topic-filtered
   BibTeX export completes in under one second.
 - Time and resources: under 10 seconds, under 1 GB RAM and disk.

@@ -51,7 +51,7 @@ PY
 if [[ ! -d .venv ]]; then
   step "Creating .venv"
   if command -v uv >/dev/null 2>&1; then
-    uv venv --quiet --python "$python_bin" .venv
+    uv venv --quiet --seed --python "$python_bin" .venv
   else
     "$python_bin" -m venv .venv
   fi

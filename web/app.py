@@ -277,7 +277,7 @@ def page_artifact() -> None:
         """
     )
 
-    st.code("./reproduce.sh", language="bash")
+    st.code("bash reproduce.sh", language="bash")
 
     st.subheader("Reproducibility evidence")
     evidence = pd.DataFrame(

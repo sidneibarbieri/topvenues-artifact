@@ -21,7 +21,7 @@ refreshing, querying, and exporting venue-bounded paper collections.
 ## Minimal Verification
 
 ```bash
-./reproduce.sh
+bash reproduce.sh
 ```
 
 Expected output: `✓ All headline claims reproduced`.
@@ -44,7 +44,7 @@ Total runtime is well under a minute on a 2020-or-later laptop.
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-web.txt
 streamlit run web/app.py
 ```
 
@@ -58,7 +58,7 @@ for refreshing the corpus from live sources.
 ## Alternative Verification Paths
 
 - Docker: `docker compose up` then `http://localhost:8501`.
-- Manual: `pip install -r requirements.txt` + `python -m pytest -q` +
+- Manual: `pip install -r requirements.txt -r requirements-web.txt` + `python -m pytest -q` +
   `python -m src.cli stats`.
 
 ## Positioning
