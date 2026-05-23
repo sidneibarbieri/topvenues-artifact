@@ -25,7 +25,7 @@ ARTIFACT_CLAIMS = (
 )
 
 st.set_page_config(
-    page_title="topVenues - Security Paper Explorer",
+    page_title="TopVenues - Security Paper Explorer",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -692,7 +692,7 @@ def main() -> None:
             '<h2 style="color:#fff !important; border:none !important;'
             'font-size:1.15rem !important; text-transform:none !important;'
             'letter-spacing:0 !important; margin-bottom:1rem !important">'
-            'topVenues</h2>',
+            'TopVenues</h2>',
             unsafe_allow_html=True,
         )
         page = st.radio("Navigate", list(pages.keys()), label_visibility="collapsed")
@@ -701,7 +701,7 @@ def main() -> None:
     pages[page]()
 
     st.markdown(
-        '<div class="footer">topVenues — bibliographic explorer · '
+        '<div class="footer">TopVenues — bibliographic explorer · '
         'data sourced from DBLP, Semantic Scholar, OpenAlex, CrossRef</div>',
         unsafe_allow_html=True,
     )

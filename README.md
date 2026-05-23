@@ -1,8 +1,8 @@
-# topVenues — Artifact
+# TopVenues — Artifact
 
-topVenues is an open-source tool that builds a declared, reproducible corpus of
+TopVenues is an open-source tool that builds a declared, reproducible corpus of
 top cybersecurity publications and turns it into a measurement substrate for
-literature reviews. It accompanies the paper *"topVenues: A Reproducible Corpus
+literature reviews. It accompanies the paper *"TopVenues: A Reproducible Corpus
 and Tooling Substrate for Cybersecurity Literature Reviews."*
 
 The paper frames corpus construction as a reproducibility problem and solves it
@@ -78,8 +78,8 @@ CrossRef, Semantic Scholar) and arXiv over HTTPS only.
 ## Installation
 
 ```bash
-git clone <repository-url> topVenues
-cd topVenues
+git clone <repository-url> TopVenues
+cd TopVenues
 bash reproduce.sh
 ```
 
@@ -91,7 +91,7 @@ Docker alternative needs no local Python:
 docker compose run --rm app bash reproduce.sh
 ```
 
-If your shell is already inside the `topVenues` directory, skip the `cd` step.
+If your shell is already inside the `TopVenues` directory, skip the `cd` step.
 
 ## Minimal Test
 

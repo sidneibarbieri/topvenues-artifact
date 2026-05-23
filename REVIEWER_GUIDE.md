@@ -1,11 +1,11 @@
-# topVenues — Reviewer Guide
+# TopVenues — Reviewer Guide
 
 This guide is the practical entry point for reviewers who want to
-inspect the topVenues artifact.
+inspect the TopVenues artifact.
 
-## What topVenues Is
+## What TopVenues Is
 
-topVenues is an open-source, reproducible literature-review substrate
+TopVenues is an open-source, reproducible literature-review substrate
 for cybersecurity. It combines a tool and a methodology for constructing,
 refreshing, querying, and exporting venue-bounded paper collections.
 
@@ -48,7 +48,7 @@ pip install -r requirements.txt -r requirements-web.txt
 streamlit run web/app.py
 ```
 
-If the shell prompt already ends in `topVenues`, skip `cd topVenues`.
+If the shell prompt already ends in `TopVenues`, skip `cd TopVenues`.
 The first page, **Overview**, is the shortest evaluation path: it exposes the
 claim set, the reproduction command, artifact-badge evidence and the two
 measurement findings. **Search** is for corpus inspection and reference
@@ -63,7 +63,7 @@ for refreshing the corpus from live sources.
 
 ## Positioning
 
-topVenues is a tool-supported methodology, not a generic paper generator or
+TopVenues is a tool-supported methodology, not a generic paper generator or
 paper search engine. Its scientific value is the reproducible construction and
 preservation of a declared cybersecurity collection, auditable as a single
 file in version control.
