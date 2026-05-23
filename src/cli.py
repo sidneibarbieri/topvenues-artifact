@@ -347,11 +347,11 @@ def stats(ctx: click.Context) -> None:
     with_bibtex = data.get("with_bibtex", 0)
     console.print(f"\n[bold]Total Papers:[/bold] {total}")
     console.print(
-        f"[bold]With Abstracts:[/bold] {with_abstracts} ({with_abstracts / total * 100:.1f}%)"
+        f"[bold]With Abstracts:[/bold] {with_abstracts} ({with_abstracts / total * 100:.2f}%)"
     )
     console.print(f"[bold]Without Abstracts:[/bold] {data['without_abstracts']}")
     console.print(
-        f"[bold]With BibTeX:[/bold]    {with_bibtex} ({with_bibtex / total * 100:.1f}%)"
+        f"[bold]With BibTeX:[/bold]    {with_bibtex} ({with_bibtex / total * 100:.2f}%)"
     )
 
     console.print("\n[bold]By Conference:[/bold]")

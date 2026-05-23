@@ -38,7 +38,7 @@ st.markdown(
     <style>
         :root {
             --ink:    #18212f;
-            --navy:   #1f2a3d;
+            --navy:   #243247;
             --slate:  #3d4b5f;
             --teal:   #2f6f73;
             --amber:  #b36b2c;
@@ -46,23 +46,39 @@ st.markdown(
             --rose:   #a84646;
             --muted:  #d8e2e3;
             --border: #d8dde3;
-            --bg:     #f7f7f4;
+            --bg:     #f8f8f5;
             --card:   #ffffff;
         }
 
+        .stApp, [data-testid="stAppViewContainer"] {
+            background: var(--bg);
+            color: var(--ink);
+        }
+        [data-testid="stHeader"] { background: rgba(248, 248, 245, .86); }
+        [data-testid="stMainBlockContainer"] { padding-top: 2.2rem; }
+        [data-testid="stDeployButton"],
+        [data-testid="stToolbar"],
+        #MainMenu,
+        footer {
+            visibility: hidden;
+            height: 0;
+        }
+
         .app-header {
-            background: var(--navy);
+            background: #eef4f5;
             border-left: 5px solid var(--teal);
             border-radius: 6px;
             padding: 1.35rem 1.6rem;
             margin-bottom: 1.4rem;
-            box-shadow: 0 3px 12px rgba(24, 33, 47, .08);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
         .app-header h1 {
-            color: #ffffff; font-size: 1.75rem; font-weight: 700;
+            color: var(--ink); font-size: 1.75rem; font-weight: 700;
             margin: 0 0 .35rem; letter-spacing: 0;
         }
-        .app-header p { color: var(--muted); font-size: .96rem; margin: 0; }
+        .app-header p { color: #4d5f71; font-size: .96rem; margin: 0; }
 
         .metric-row { display: flex; gap: .9rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
         .metric {
@@ -92,13 +108,20 @@ st.markdown(
     .tag-journal  { background: #d4edda; color: #155724; }
     .tag-article  { background: #f0f4f8; color: #0d1b2a; }
 
-        section[data-testid="stSidebar"] { background: var(--ink); }
-    section[data-testid="stSidebar"] * { color: #cdd9e5 !important; }
+    section[data-testid="stSidebar"] {
+        background: #f1f4f3;
+        border-right: 1px solid var(--border);
+    }
+    section[data-testid="stSidebar"] * { color: var(--ink) !important; }
     section[data-testid="stSidebar"] h2 {
-        color: #ffffff !important; font-size: .95rem;
+        color: var(--ink) !important; font-size: .95rem;
         letter-spacing: .4px; text-transform: uppercase;
-        border-bottom: 1px solid var(--slate);
+        border-bottom: 1px solid var(--border);
         padding-bottom: .5rem; margin: .4rem 0 .8rem;
+    }
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] p {
+        color: #334155 !important;
     }
 
         .results-bar {
@@ -247,10 +270,10 @@ def _render_metrics(stats: dict, filtered_count: int | None = None) -> None:
         f'<div class="sub">across {venues} venues</div></div>'
         f'<div class="metric amber"><div class="lbl">With abstract</div>'
         f'<div class="val">{with_abs:,}</div>'
-        f'<div class="sub">{abs_pct:.1f}% coverage</div></div>'
+        f'<div class="sub">{abs_pct:.2f}% coverage</div></div>'
         f'<div class="metric rose"><div class="lbl">With BibTeX</div>'
         f'<div class="val">{with_bib:,}</div>'
-        f'<div class="sub">{bib_pct:.1f}% coverage</div></div>'
+        f'<div class="sub">{bib_pct:.2f}% coverage</div></div>'
         f'{extra}'
         '</div>',
         unsafe_allow_html=True,
@@ -308,12 +331,12 @@ def page_artifact() -> None:
             {
                 "Finding": "Early signal",
                 "Result": "29.2% of 2024-2025 core security papers have a matching arXiv preprint.",
-                "Reproduce": "python scripts/early_signal_study.py",
+                "Reproduce": ".venv/bin/python scripts/early_signal_study.py",
             },
             {
                 "Finding": "Triage filter",
                 "Result": "Prior-scope authorship gives 16.5x precision lift at 90% recall and 64% volume cut.",
-                "Reproduce": "python scripts/readiness_study.py",
+                "Reproduce": ".venv/bin/python scripts/readiness_study.py",
             },
         ]
     )
@@ -404,20 +427,55 @@ def page_search() -> None:
         return
 
     total_pages = max(1, (len(results) + page_size - 1) // page_size)
+    search_signature = (
+        title_query,
+        abstract_query,
+        author_query,
+        tech_query,
+        venue_choice,
+        year_choice,
+        tuple(class_choices),
+        abstract_length,
+        only_with_bibtex,
+        page_size,
+        sort_choice,
+    )
+    if st.session_state.get("search_signature") != search_signature:
+        st.session_state["page_no"] = 1
+        st.session_state["search_signature"] = search_signature
+    st.session_state["page_no"] = min(
+        max(1, int(st.session_state.get("page_no", 1))),
+        total_pages,
+    )
+
     col_count, col_page = st.columns([3, 1])
+    with col_page:
+        if total_pages > 1:
+            nav_prev, nav_next = st.columns(2)
+            with nav_prev:
+                if st.button("‹", disabled=st.session_state["page_no"] <= 1, width="stretch"):
+                    st.session_state["page_no"] -= 1
+                    st.rerun()
+            with nav_next:
+                if st.button("›", disabled=st.session_state["page_no"] >= total_pages, width="stretch"):
+                    st.session_state["page_no"] += 1
+                    st.rerun()
+            page = int(st.number_input("Page", 1, total_pages, key="page_no"))
+        else:
+            page = 1
+
+    start = (page - 1) * page_size
+    end = min(len(results), start + page_size)
+    page_slice = results[start : start + page_size]
     with col_count:
         st.markdown(
             f'<div class="results-bar">'
             f'<span class="count">{len(results):,} papers found</span>'
-            f'<span class="sub">{total_pages} page(s) · {page_size} per page</span>'
+            f'<span class="sub">showing {start + 1:,}–{end:,} · '
+            f'page {page} of {total_pages} · {page_size} per page</span>'
             f'</div>',
             unsafe_allow_html=True,
         )
-    with col_page:
-        page = st.number_input("Page", 1, total_pages, 1, key="page_no") if total_pages > 1 else 1
-
-    start = (page - 1) * page_size
-    page_slice = results[start : start + page_size]
 
     table_rows = [
         {
