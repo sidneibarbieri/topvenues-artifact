@@ -1,7 +1,7 @@
 # TopVenues — Project Structure
 
-The repository is organised around three purposes: the runnable tool,
-the curated research artifact, and active paper workspaces.
+The repository is organised around two purposes: the runnable tool and the
+curated research artifact.
 
 ## Runtime Artifact
 
@@ -24,8 +24,5 @@ the curated research artifact, and active paper workspaces.
 | `ARTIFACT_README.md` | artifact overview for evaluation |
 | `REVIEWER_GUIDE.md` | how to verify each headline claim |
 
-## Paper Workspaces
-
-Manuscript drafts live under `papers/`, a local writing workspace that is
-excluded from the public artifact so the released code and corpus remain
-independent of any specific manuscript or venue.
+The public package contains the artifact code, committed snapshots,
+documentation, and verification scripts needed by reviewers.

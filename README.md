@@ -247,16 +247,6 @@ ruff check src/ web/ tests/
 
 ---
 
-## Paper and artifact preparation
-
-Paper drafts are kept out of the public artifact under `papers/` (a local,
-untracked directory) so that the released code and corpus stay independent of
-any specific manuscript or venue. Artifact-evaluation notes are in
-`ARTIFACT_README.md`, `REVIEWER_GUIDE.md`, and `PROJECT_STRUCTURE.md`.
-Literature-review support and reference material live under `literature/`.
-
----
-
 ## Data sources
 
 - [DBLP](https://dblp.org) — paper metadata
