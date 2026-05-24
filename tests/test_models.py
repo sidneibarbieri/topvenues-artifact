@@ -12,7 +12,7 @@ class TestSearchFilters:
         assert not SearchFilters().has_any_filter()
 
     def test_one_filter_set(self):
-        assert SearchFilters(title_contains="LLM").has_any_filter()
+        assert SearchFilters(title_contains="SGX").has_any_filter()
 
     def test_multiple_filters(self):
         f = SearchFilters(event="ACM CCS", year=2023)

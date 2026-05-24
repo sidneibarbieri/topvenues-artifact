@@ -49,6 +49,13 @@ the application transparently materialises `data/dataset/papers.db` (~74 MB)
 from that snapshot, so there is **no manual import step**: 9,925 papers,
 9,911 abstracts and 9,924 BibTeX entries are available immediately.
 
+The released corpus is pinned by the compressed SQLite snapshot. The
+human-readable `data/dataset/master_dataset.csv` file is a derived export of the
+same frozen database, while `reproduce.sh` and the paper claims read the SQLite
+snapshot. A refreshed corpus should be published as a new snapshot with a new
+checksum and updated reported counts, rather than silently changing the
+submission denominator.
+
 When a newer snapshot lands upstream and you want to refresh your local
 copy explicitly:
 
@@ -58,8 +65,8 @@ python -m src.cli refresh-db
 
 ### Web interface (recommended)
 
-If your shell prompt already ends in `topVenues`, do not run `cd topVenues`
-again; start from the commands below.
+If your shell prompt already ends in `topvenues-artifact`, do not run
+`cd topvenues-artifact` again; start from the commands below.
 
 ```bash
 streamlit run web/app.py
@@ -72,6 +79,8 @@ pip install -r requirements-web.txt
 ```
 
 Open <http://localhost:8501>. Main pages:
+
+![TopVenues overview page](docs/assets/topvenues-overview.png)
 
 - **Overview** — headline claims, reproduction command, evidence
   table and scientific findings.
@@ -94,7 +103,7 @@ python -m src.cli extract          # fetch missing abstracts (rate-limited)
 python -m src.cli bibtex           # fetch BibTeX entries from DBLP
 python -m src.cli run-all          # download + consolidate + extract + bibtex
 
-python -m src.cli search --title "SOC" --author "Sekar" --abstract "LLM"
+python -m src.cli search --title "SOC" --author "Sekar" --abstract "SGX"
 python -m src.cli search --tech "blockchain" --year 2024
 python -m src.cli export --format bibtex --tech "intrusion detection" -o intrusion.bib
 python -m src.cli stats
@@ -132,11 +141,6 @@ existing entries unless you explicitly pass `--overwrite` (only
 available on `bibtex-local`). Combining commands works as expected:
 run `bibtex-local` for instant coverage, then run `bibtex-from-dump`
 later to upgrade entries to DBLP-canonical when you have the bandwidth.
-
-> **Companion tool:** once your `.bib` is in your paper, run
-> [Vyas Sekar's AcademicLinter](https://github.com/vyassekar/AcademicLinter)
-> on the LaTeX project to catch unused entries, weasel words, repeated
-> words, and author-name leaks in comments.
 
 ### Incremental updates
 

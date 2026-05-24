@@ -352,7 +352,7 @@ def page_search() -> None:
 
         with st.expander("Text", expanded=True):
             title_query = st.text_input("Title contains", placeholder="e.g., authentication")
-            abstract_query = st.text_input("Abstract contains", placeholder="e.g., LLM, SGX")
+            abstract_query = st.text_input("Abstract contains", placeholder="e.g., SGX, ransomware")
             author_query = st.text_input("Author contains", placeholder="e.g., Sekar")
             tech_query = st.text_input("Topic / tech", placeholder="e.g., blockchain, 5G")
 
